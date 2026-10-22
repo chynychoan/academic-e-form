@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teaching Supply Request Form - Aii Language Center</title>
+  <style>
+/* Ambient light button container */
+.home-btn-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 2px;
+  overflow: hidden;
+}
+
+/* Rotating ambient light stroke gradient */
+.home-btn-wrap::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0 300deg, #00f2fe 340deg, #4facfe 360deg);
+  animation: rotateLight 3s linear infinite;
+}
+
+@keyframes rotateLight {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Home button */
+.home-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: #0a5078;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: .9rem;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.home-btn:hover {
+  background: #ffffff;
+  color: #0a5078;
+}
+
+
+    :root {
+      --primary-color: #0b4e72;
+      --primary-hover: #083852;
+      --bg-color: #eaf2f8;
+      --card-bg: #ffffff;
+      --text-main: #2c3e50;
+      --border-color: #d1dbe5;
+      --subtext: #606266;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Header Banner */
+    .header-banner {
+      width: 100%;
+      background: linear-gradient(135deg, #073b57 0%, #0b4e72 60%, #156d9c 100%);
+      color: white;
+      padding: 30px 20px 50px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto 20px auto;
+      font-size: 13px;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      background: white;
+      color: var(--primary-color);
+      padding: 4px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .header-banner h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header-banner p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin-top: -30px;
+      margin-bottom: 40px;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    /* Step Navigation Header */
+    .step-header {
+      display: flex;
+      background: #f4f7f9;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .step-tab {
+      flex: 1;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #909399;
+    }
+
+    .step-tab.active {
+      color: var(--primary-color);
+      background: white;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #dcdfe6;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .step-tab.active .step-num {
+      background: var(--primary-color);
+    }
+
+    /* Form Body */
+    .form-body {
+      padding: 30px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      font-size: 12px;
+      color: var(--subtext);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-group label .required {
+      color: red;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary-color);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Checkbox Selector Cards */
+    .resource-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .resource-option {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      background: #fafafa;
+    }
+
+    .resource-option.selected {
+      border-color: var(--primary-color);
+      background: #f0f7fc;
+    }
+
+    .resource-option input {
+      accent-color: var(--primary-color);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Resource Reservation Card */
+    .reservation-block {
+      border: 1px solid #cbe0ef;
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .reservation-block.active {
+      display: block;
+    }
+
+    .reservation-block h3 {
+      font-size: 16px;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    /* Time Slots Grid */
+    .time-slots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .slot-item {
+      border: 1px solid var(--border-color);
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .slot-item input {
+      accent-color: var(--primary-color);
+    }
+
+    /* Tablets Grid Selector */
+    .tablets-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .tablet-btn {
+      border: 1px solid var(--border-color);
+      background: white;
+      border-radius: 6px;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .tablet-btn.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Action Buttons */
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: white;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: #f4f5f7;
+    }
+
+    /* Step 2 Review styling */
+    .review-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .review-table td {
+      padding: 10px;
+      border-bottom: 1px solid #ebeef5;
+      font-size: 13px;
+    }
+
+    .review-table tr td:first-child {
+      color: var(--subtext);
+      width: 35%;
+    }
+
+    .review-card {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: #fafafa;
+    }
+
+    .review-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .footer-text {
+      text-align: center;
+      font-size: 11px;
+      color: #888;
+      margin-top: 1px;
+      margin-bottom: 15px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <div class="top-bar">
+      <span class="logo">Aii LANGUAGE CENTER</span>
+      <span>Office of the Academic Secretary</span>
+    </div>
+    <h1>Teaching Supply Request Form</h1>
+    <p>Reserve teaching facilities and equipment at least half a day in advance. Select the resources you need, choose your preferred time slots, and review your details before submitting the reservation.</p>
+    <br>
+    <div class="home-btn-wrap">
+  <a href="index.html" class="home-btn"><i class="fa-solid fa-house"></i>Back Home</a>
+</div>
+  </div>
+
+  <!-- Form Container -->
+   <br>
+  <div class="container">
+    <div class="card">
+      
+      <!-- Step Navigation -->
+      <div class="step-header">
+        <div class="step-tab active" id="tab-step1">
+          <span class="step-num">1</span>
+          <span>Request Details</span>
+        </div>
+        <div class="step-tab" id="tab-step2">
+          <span class="step-num">2</span>
+          <span>Review & Submit</span>
+        </div>
+      </div>
+
+      <!-- Main Form Element -->
+      <form id="supplyForm">
+        
+        <!-- STEP 1: REQUEST DETAILS -->
+        <div class="form-body" id="step1">
+          <h2 class="section-title">Requester Information</h2>
+          <p class="section-desc">All fields are required. Select at least one resource and a time slot for each selected resource.</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Date of Request <span class="required">*</span></label>
+              <input type="date" id="reqDate" required>
+            </div>
+            <div class="form-group">
+              <label>Name <span class="required">*</span></label>
+              <input type="text" id="reqName" placeholder="Enter your full name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Position <span class="required">*</span></label>
+            <select id="reqPosition" required>
+              <option value="" disabled selected>Select position</option>
+              <option value="ESL Teacher">ESL Teacher</option>
+              <option value="ESL Teacher Aide">ESL Teacher Aide</option>
+              <option value="CSL Teacher">CSL Teacher</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>What is the purpose of requesting this supply item today? <span class="required">*</span></label>
+            <textarea id="reqPurpose" placeholder="State your purpose..." required></textarea>
+          </div>
+
+          <h2 class="section-title" style="margin-top: 30px;">Teaching Supply</h2>
+          <p class="section-desc">Choose one or more resources. Complete the details that appear below.</p>
+
+          <!-- Top Checkboxes -->
+          <div class="resource-selector">
+            <label class="resource-option" id="lbl-tv">
+              <input type="checkbox" id="chk-tv" onchange="toggleResource('tv')"> TV
+            </label>
+            <label class="resource-option" id="lbl-eclassroom">
+              <input type="checkbox" id="chk-eclassroom" onchange="toggleResource('eclassroom')"> E-Classroom
+            </label>
+            <label class="resource-option" id="lbl-library">
+              <input type="checkbox" id="chk-library" onchange="toggleResource('library')"> Library
+            </label>
+            <label class="resource-option" id="lbl-tablet">
+              <input type="checkbox" id="chk-tablet" onchange="toggleResource('tablet')"> Tablet
+            </label>
+          </div>
+
+          <!-- TV Dynamic Block -->
+          <div class="reservation-block" id="block-tv">
+            <h3>TV reservation</h3>
+            <div class="form-group">
+              <label>Date of Reservation <span class="required">*</span></label>
+              <input type="date" class="tv-field" id="tv-date">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Room <span class="required">*</span></label>
+                <input type="text" class="tv-field" id="tv-room" placeholder="e.g. 202">
+              </div>
+              <div class="form-group">
+                <label>Level <span class="required">*</span></label>
+                <input type="text" class="tv-field" id="tv-level" placeholder="e.g. Level 1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Laptop (Prioritize for Movie Sessions Only***)</label>
+              <select class="tv-field" id="tv-laptop">
+                <option value="">Select Laptop Code</option>
+                <option value="001">001</option>
+                <option value="002">002</option>
+                <option value="003">003</option>
+                <option value="004">004</option>
+                <option value="005">005</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Time slots <span class="required">*</span> — select one or more</label>
+              <div class="time-slots-grid">
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="08:00–09:00 a.m."> 08:00–09:00 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="09:30–10:30 a.m."> 09:30–10:30 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="02:00–03:00 p.m."> 02:00–03:00 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="03:30–04:30 p.m."> 03:30–04:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="05:30–06:30 p.m."> 05:30–06:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tv-slot" value="06:45–07:45 p.m."> 06:45–07:45 p.m.</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-Classroom Dynamic Block -->
+          <div class="reservation-block" id="block-eclassroom">
+            <h3>E-Classroom reservation</h3>
+            <div class="form-group">
+              <label>Date of Reservation <span class="required">*</span></label>
+              <input type="date" class="ec-field" id="ec-date">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Room <span class="required">*</span></label>
+                <input type="text" class="ec-field" id="ec-room">
+              </div>
+              <div class="form-group">
+                <label>Level <span class="required">*</span></label>
+                <input type="text" class="ec-field" id="ec-level">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Time slots <span class="required">*</span> — select one or more</label>
+              <div class="time-slots-grid">
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="08:00–09:00 a.m."> 08:00–09:00 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="09:30–10:30 a.m."> 09:30–10:30 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="02:00–03:00 p.m."> 02:00–03:00 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="03:30–04:30 p.m."> 03:30–04:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="05:30–06:30 p.m."> 05:30–06:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="ec-slot" value="06:45–07:45 p.m."> 06:45–07:45 p.m.</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Library Dynamic Block -->
+          <div class="reservation-block" id="block-library">
+            <h3>Library reservation</h3>
+            <div class="form-group">
+              <label>Date of Reservation <span class="required">*</span></label>
+              <input type="date" class="lib-field" id="lib-date">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Room <span class="required">*</span></label>
+                <input type="text" class="lib-field" id="lib-room">
+              </div>
+              <div class="form-group">
+                <label>Level <span class="required">*</span></label>
+                <input type="text" class="lib-field" id="lib-level">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Time slots <span class="required">*</span> — select one or more</label>
+              <div class="time-slots-grid">
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="08:00–09:00 a.m."> 08:00–09:00 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="09:30–10:30 a.m."> 09:30–10:30 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="02:00–03:00 p.m."> 02:00–03:00 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="03:30–04:30 p.m."> 03:30–04:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="05:30–06:30 p.m."> 05:30–06:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="lib-slot" value="06:45–07:45 p.m."> 06:45–07:45 p.m.</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tablet Dynamic Block -->
+          <div class="reservation-block" id="block-tablet">
+            <h3>Tablet reservation</h3>
+            <div class="form-group">
+              <label>Date of Reservation <span class="required">*</span></label>
+              <input type="date" class="tab-field" id="tab-date">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Room <span class="required">*</span></label>
+                <input type="text" class="tab-field" id="tab-room">
+              </div>
+              <div class="form-group">
+                <label>Level <span class="required">*</span></label>
+                <input type="text" class="tab-field" id="tab-level">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Number of tablets <span class="required">*</span> — select one or more</label>
+              <div class="tablets-grid" id="tabletNumberGrid">
+                <!-- JS auto-populates 01 through 25 -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Time slots <span class="required">*</span> — select one or more</label>
+              <div class="time-slots-grid">
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="08:00–09:00 a.m."> 08:00–09:00 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="09:30–10:30 a.m."> 09:30–10:30 a.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="02:00–03:00 p.m."> 02:00–03:00 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="03:30–04:30 p.m."> 03:30–04:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="05:30–06:30 p.m."> 05:30–06:30 p.m.</label>
+                <label class="slot-item"><input type="checkbox" name="tab-slot" value="06:45–07:45 p.m."> 06:45–07:45 p.m.</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group" style="justify-content: flex-end;">
+            <button type="button" class="btn btn-primary" onclick="goToStep2()">Review Reservation &rarr;</button>
+          </div>
+          <br>
+          <p><b>IT Technical Support</b></p>
+        </div>
+
+        <!-- STEP 2: REVIEW & SUBMIT -->
+        <div class="form-body hidden" id="step2">
+          <h2 class="section-title">Review your request</h2>
+          <p class="section-desc">Check everything below. Go back if anything needs to change.</p>
+
+          <table class="review-table">
+            <tr>
+              <td>Date of request</td>
+              <td id="rev-reqDate">-</td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td id="rev-reqName">-</td>
+            </tr>
+            <tr>
+              <td>Position</td>
+              <td id="rev-reqPosition">-</td>
+            </tr>
+            <tr>
+              <td>Purpose</td>
+              <td id="rev-reqPurpose">-</td>
+            </tr>
+          </table>
+
+          <div id="review-resources-container">
+            <!-- Dynamically injected review cards -->
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline" onclick="goToStep1()">&larr; Edit request</button>
+            <button type="button" class="btn btn-primary" id="btnSubmit" onclick="submitFinalForm()">Submit request</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-text">Office of the Academic Secretary (Aii-CAP)</div>
+
+  <script>
+    // System Configurations
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlOS46oUoQb01q3UmYvpqj16mJRn8mUusPqj__b1dpibn7r20K5LdCSyoNkqsI6QkvQw/exec";
+    const TELEGRAM_BOT_TOKEN = "8812262358:AAFSFvftidpUkd6OtAuvhJPY-j_rPJmkZ7M";
+    const TELEGRAM_CHAT_ID = "-1003715278159";
+
+    // Set Default Today Date
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('reqDate').value = today;
+
+      // Render 01 to 25 Tablet Grid Buttons
+      const grid = document.getElementById('tabletNumberGrid');
+      for (let i = 1; i <= 25; i++) {
+        const num = i < 10 ? '0' + i : '' + i;
+        const btn = document.createElement('div');
+        btn.className = 'tablet-btn';
+        btn.innerText = num;
+        btn.onclick = () => btn.classList.toggle('selected');
+        grid.appendChild(btn);
+      }
+    });
+
+    // Toggle Checkboxes for resources
+    function toggleResource(res) {
+      const chk = document.getElementById(`chk-${res}`);
+      const lbl = document.getElementById(`lbl-${res}`);
+      const block = document.getElementById(`block-${res}`);
+
+      if (chk.checked) {
+        lbl.classList.add('selected');
+        block.classList.add('active');
+      } else {
+        lbl.classList.remove('selected');
+        block.classList.remove('active');
+      }
+    }
+
+    // Navigation & Validation
+    function goToStep2() {
+      // Validate Basic Info
+      const reqDate = document.getElementById('reqDate').value;
+      const reqName = document.getElementById('reqName').value;
+      const reqPosition = document.getElementById('reqPosition').value;
+      const reqPurpose = document.getElementById('reqPurpose').value;
+
+      if (!reqDate || !reqName || !reqPosition || !reqPurpose) {
+        alert("Please complete all required fields under Requester Information.");
+        return;
+      }
+
+      // Check if at least one resource is selected
+      const isTv = document.getElementById('chk-tv').checked;
+      const isEc = document.getElementById('chk-eclassroom').checked;
+      const isLib = document.getElementById('chk-library').checked;
+      const isTab = document.getElementById('chk-tablet').checked;
+
+      if (!isTv && !isEc && !isLib && !isTab) {
+        alert("Please select at least one teaching supply resource.");
+        return;
+      }
+
+      // Populate Step 2 Info
+      document.getElementById('rev-reqDate').innerText = reqDate;
+      document.getElementById('rev-reqName').innerText = reqName;
+      document.getElementById('rev-reqPosition').innerText = reqPosition;
+      document.getElementById('rev-reqPurpose').innerText = reqPurpose;
+
+      // Build Dynamic Review Sections
+      const container = document.getElementById('review-resources-container');
+      container.innerHTML = '';
+
+      if (isTv) addReviewCard(container, 'TV', getTVData());
+      if (isEc) addReviewCard(container, 'E-Classroom', getEcData());
+      if (isLib) addReviewCard(container, 'Library', getLibData());
+      if (isTab) addReviewCard(container, 'Tablet', getTabData());
+
+      // Switch Step Views
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+      document.getElementById('tab-step1').classList.remove('active');
+      document.getElementById('tab-step2').classList.add('active');
+    }
+
+    function goToStep1() {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step1').classList.remove('hidden');
+      document.getElementById('tab-step2').classList.remove('active');
+      document.getElementById('tab-step1').classList.add('active');
+    }
+
+    // Helper functions to retrieve details
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(c => c.value).join(', ');
+    }
+
+    function getTVData() {
+      return {
+        'Date of reservation': document.getElementById('tv-date').value || '-',
+        'Room': document.getElementById('tv-room').value || '-',
+        'Level': document.getElementById('tv-level').value || '-',
+        'Laptop': document.getElementById('tv-laptop').value || '-',
+        'Time slots': getCheckedValues('tv-slot') || '-'
+      };
+    }
+
+    function getEcData() {
+      return {
+        'Date of reservation': document.getElementById('ec-date').value || '-',
+        'Room': document.getElementById('ec-room').value || '-',
+        'Level': document.getElementById('ec-level').value || '-',
+        'Time slots': getCheckedValues('ec-slot') || '-'
+      };
+    }
+
+    function getLibData() {
+      return {
+        'Date of reservation': document.getElementById('lib-date').value || '-',
+        'Room': document.getElementById('lib-room').value || '-',
+        'Level': document.getElementById('lib-level').value || '-',
+        'Time slots': getCheckedValues('lib-slot') || '-'
+      };
+    }
+
+    function getTabData() {
+      const selectedTablets = Array.from(document.querySelectorAll('#tabletNumberGrid .tablet-btn.selected')).map(b => b.innerText).join(', ');
+      return {
+        'Date of reservation': document.getElementById('tab-date').value || '-',
+        'Room': document.getElementById('tab-room').value || '-',
+        'Level': document.getElementById('tab-level').value || '-',
+        'Number of tablets': selectedTablets || '-',
+        'Time slots': getCheckedValues('tab-slot') || '-'
+      };
+    }
+
+    function addReviewCard(container, title, dataObj) {
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      
+      let rowsHtml = '';
+      for (const [key, val] of Object.entries(dataObj)) {
+        rowsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
+      }
+
+      card.innerHTML = `
+        <h4>${title}</h4>
+        <table class="review-table" style="margin-bottom:0;">${rowsHtml}</table>
+      `;
+      container.appendChild(card);
+    }
+
+    // Submission Handler
+    async function submitFinalForm() {
+      const btn = document.getElementById('btnSubmit');
+      btn.innerText = "Submitting...";
+      btn.disabled = true;
+
+      // Construct Payload
+      const payload = {
+        requestDate: document.getElementById('reqDate').value,
+        name: document.getElementById('reqName').value,
+        position: document.getElementById('reqPosition').value,
+        purpose: document.getElementById('reqPurpose').value,
+        tv: document.getElementById('chk-tv').checked ? getTVData() : null,
+        eClassroom: document.getElementById('chk-eclassroom').checked ? getEcData() : null,
+        library: document.getElementById('chk-library').checked ? getLibData() : null,
+        tablet: document.getElementById('chk-tablet').checked ? getTabData() : null,
+      };
+
+      try {
+        // Send to Google Apps Script
+        if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        // Send to Telegram
+        if (TELEGRAM_BOT_TOKEN && TELEGRAM_BOT_TOKEN !== "YOUR_TELEGRAM_BOT_TOKEN") {
+          await sendTelegramNotification(payload);
+        }
+
+        alert("Reservation Request Submitted Successfully!");
+        window.location.reload();
+
+      } catch (err) {
+        console.error(err);
+        alert("An error occurred while submitting the form. Please try again.");
+      } finally {
+        btn.innerText = "Submit request";
+        btn.disabled = false;
+      }
+    }
+
+    // Telegram Bot Integration
+    async function sendTelegramNotification(p) {
+      let msg = `<b>📋 NEW TEACHING SUPPLY REQUEST</b>\n\n`;
+      msg += `📅<b>Date of Request:</b> ${p.requestDate}\n`;
+      msg += `👤<b>Namer:</b> ${p.name}\n`;
+      //msg += `💼<b>Position:</b> ${p.position}\n`;
+      msg += `📝<b>Purpose:</b> ${p.purpose}\n`;
+
+      if (p.tv) {
+        msg += `<b>📺 TV Reservation</b>\n`;
+        msg += `• Date of using: ${p.tv['Date of reservation']}\n`;
+        //msg += `• Date: ${p.tv['Date of reservation']}\n• Room: ${p.tv.Room} (Level: ${p.tv.Level})\n• Laptop: ${p.tv.Laptop}\n• Slot: ${p.tv['Time slots']}\n\n`;
+      }
+      if (p.eClassroom) {
+        msg += `<b>🖥️ E-Classroom Reservation</b>\n`;
+        msg += `• Date of using: ${p.eClassroom['Date of reservation']}\n`;
+        //msg += `• Date: ${p.eClassroom['Date of reservation']}\n• Room: ${p.eClassroom.Room} (Level: ${p.eClassroom.Level})\n• Slot: ${p.eClassroom['Time slots']}\n\n`;
+      }
+      if (p.library) {
+        msg += `<b>📚 Library Reservation</b>\n`;
+        msg += `• Date of using: ${p.library['Date of reservation']}\n`;
+        //msg += `• Date: ${p.library['Date of reservation']}\n• Room: ${p.library.Room} (Level: ${p.library.Level})\n• Slot: ${p.library['Time slots']}\n\n`;
+      }
+      if (p.tablet) {
+        msg += `<b>📱 Tablet Reservation</b>\n`;
+        msg += `• Date of using: ${p.tablet['Date of reservation']}\n`;
+        //msg += `• Date: ${p.tablet['Date of reservation']}\n• Room: ${p.tablet.Room} (Level: ${p.tablet.Level})\n• Tablets: ${p.tablet['Number of tablets']}\n• Slot: ${p.tablet['Time slots']}\n\n`;
+      }
+
+      msg += `\n🔗 <a href="https://docs.google.com/spreadsheets/d/1oVWdgGDGFvpF1PT5pQ4G9U909Y3p1srm4lnqLNkPAeQ/edit?gid=1648373629#gid=1648373629">View and Approve Request</a>`
+
+      const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+      await fetch(telegramUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: msg,
+          parse_mode: 'HTML'
+        })
+      });
+    }
+  </script>
+</body>
+</html>

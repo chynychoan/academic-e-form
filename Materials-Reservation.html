@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher Materials Reservation Form</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Fraunces:wght@700&display=swap">
+<style>
+
+
+
+
+:root{color-scheme:light;--ink:#1b2a3a;--mut:#5a6b7b;--bg:#ffffff;--card:#ffffff;--line:#d6dee6;--acc:#1e618c;--accbg:#e8f1f7;--err:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.6rem;margin:0 0 4px}h2{font-size:1.1rem;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,50,80,.06)}
+label{display:block;font-weight:500;margin:12px 0 4px}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font:inherit}
+input:disabled{opacity:.5;background:#f1f4f7}
+:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;font:inherit;font-weight:500;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.wf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wf>div{border:1px solid var(--line);border-radius:8px;padding:12px}
+.wf>div.on{border-color:var(--acc);background:var(--accbg)}
+.wf label.r{display:flex;gap:8px;align-items:center;margin:0 0 8px;cursor:pointer}
+.wf input[type=radio]{width:auto}
+.row{display:grid;grid-template-columns:1fr 90px auto;gap:8px;align-items:end}
+button.add,button.go{padding:10px 16px;border:0;border-radius:6px;background:var(--acc);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+button.go{width:100%;margin-top:8px;padding:14px}
+button:disabled{opacity:.5;cursor:wait}
+ul.items{list-style:none;padding:0;margin:12px 0 0}
+ul.items li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+ul.items button{background:none;border:0;color:var(--err);cursor:pointer;font:inherit}
+.empty{color:var(--mut);font-style:italic}
+.err{color:var(--err);font-weight:500;min-height:1.4em}
+.ok{background:var(--accbg);border:1px solid var(--acc);padding:16px;border-radius:8px;display:none}
+details{border:1px solid var(--line);border-radius:8px;margin-bottom:8px;background:var(--card)}
+summary{padding:12px;cursor:pointer;font-weight:700;color:var(--acc)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 12px}
+.grid.one{grid-template-columns:1fr;padding:0}
+.mi{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+label.ck{display:flex;gap:8px;align-items:center;margin:0;font-weight:400;flex:1;cursor:pointer}
+.ck input{width:auto}.mi input[type=number]{width:70px;padding:6px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+button.clr{padding:10px 16px;border:1px solid var(--acc);border-radius:6px;background:var(--card);color:var(--acc);font:inherit;font-weight:700;cursor:pointer}
+h3.rv{font-size:1rem;margin:20px 0 0}
+body{margin:0}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header.top{background:#fff;border-bottom:1px solid #e3e8ee}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px}
+header.top img{height:56px;width:auto;display:block}
+header.top span{color:#4a6177;font-weight:700;font-size:.95rem;text-align:right}
+.hero{position:relative;overflow:hidden;background:#0a5078;color:#fff;text-align:center;padding:44px 0 52px}
+.hero::before,.hero::after{content:"";position:absolute;top:-20%;bottom:-20%;transform:skewX(-20deg);background:#1f6f9a;opacity:.55}
+.hero::before{right:6%;width:70px}.hero::after{right:-2%;width:130px}
+.hero .wrap{position:relative;z-index:1;max-width:720px}
+.hero h1{font:700 2.2rem/1.2 Fraunces,Georgia,serif;margin:0 0 12px;color:#fff}
+.hero p{margin:0 0 20px;color:#dbe9f2}
+
+/* Ambient light button container */
+.home-btn-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 2px;
+  overflow: hidden;
+}
+
+/* Rotating ambient light stroke gradient */
+.home-btn-wrap::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0 300deg, #00f2fe 340deg, #4facfe 360deg);
+  animation: rotateLight 3s linear infinite;
+}
+
+@keyframes rotateLight {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Home button */
+.home-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: #0a5078;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: .9rem;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.home-btn:hover {
+  background: #ffffff;
+  color: #0a5078;
+}
+
+.header-banner {
+      
+      color: white;
+      padding: 30px 20px 50px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto auto;
+      font-size: 13px;
+    }
+
+     .logo {
+      font-weight: bold;
+      font-size: 20px;
+      background: white;
+      color: var(--primary-color);
+      padding: 4px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+@media(max-width:560px){header.top img{height:42px}header.top span{font-size:.8rem}.hero h1{font-size:1.6rem}}
+.cnt{font-weight:400;opacity:.9}
+.steps{display:flex;gap:28px;flex-wrap:wrap;margin:0 0 16px}
+.steps span{display:flex;align-items:center;gap:8px;color:var(--mut);font-weight:700}
+.steps b{width:30px;height:30px;border-radius:50%;background:var(--accbg);display:grid;place-items:center;color:var(--mut)}
+.steps .on{color:var(--ink)}.steps .on b{background:var(--acc);color:#fff}
+.acts{display:flex;gap:8px;flex-wrap:wrap}.acts .go{flex:1;margin-top:0;min-width:200px}
+table.sum{width:100%;border-collapse:collapse}
+.sum th{text-align:left;color:var(--mut);font-weight:500;padding:8px 12px 8px 0;width:38%;vertical-align:top;border-bottom:1px solid var(--line)}
+.sum td{padding:8px 0;font-weight:500;border-bottom:1px solid var(--line)}
+.sum h3{font-size:1rem;margin:16px 0 4px}
+.hide{display:none}
+@media(max-width:560px){.wf,.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="header-banner">
+    <div class="top-bar">
+      <span class="logo" style="color:#0a5078">Aii LANGUAGE CENTER</span>
+      <span>Office of the Academic Secretary</span>
+    </div>
+  </div>
+  <div class="wrap"><h1>Teacher Materials Reservation Form</h1><p>Record the collection or return of classroom materials. Complete your details, choose Collection or Return, and review your selected items before submitting.</p>
+ <div class="home-btn-wrap">
+  <a href="index.html" class="home-btn"><i class="fa-solid fa-house"></i>Back Home</a>
+</div>
+</div>
+</section>
+<main>
+<div class="ok" id="ok" role="status"></div>
+<div class="steps"><span id="s1" class="on"><b>1</b> Request Details</span><span id="s2"><b>2</b> Review &amp; Submit</span></div>
+<form id="f" novalidate>
+<div id="step1">
+ <div class="card">
+  <h2>Your details</h2>
+  <label for="reqDate">Date of Request *</label><input id="reqDate" type="date" required>
+  <label for="name">Borrower / Returner Name *</label><input id="name" required autocomplete="name">
+  <label for="pos">Position *</label>
+  <select id="pos" required>
+   <option value="">Select position</option><option>ESL Teacher</option><option>ESL Teacher Aide</option><option>CSL Teacher</option><option>Other</option>
+  </select>
+  <div id="otherWrap" class="hide"><label for="other">Please specify position *</label><input id="other"></div>
+  <label for="level">Level *</label><input id="level" required placeholder="e.g. Nursery, K1, Grade 3">
+ </div>
+ <div class="tabs" role="tablist" id="tabs"></div>
+ <div id="panels"></div>
+</div>
+<div id="step2" class="hide"><div class="card"><h2>Review your request</h2><p class="sub" style="margin:0 0 12px">Please check everything below, then submit.</p><div id="sum"></div></div></div>
+ <p class="err" id="err" role="alert"></p>
+ <div id="act1"><button class="go" id="next" type="button">Review &amp; Continue</button></div>
+ <p><b>IT Technical Support</b></p>
+ <div id="act2" class="acts hide"><button class="clr" id="back" type="button">Back to edit</button><button class="go" id="submit" type="submit">Submit reservation</button></div>
+</form>
+</main>
+<script>
+// 1) Paste your deployed Google Apps Script Web App URL here
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzZ3BQQcksDQ9d7q-ozfOAlyhQ4RBIky__RQzQqSSQRhYexw7ZFdW3MLxwugwqAgxrvlg/exec";
+
+// 2) Catalog: category -> subsection -> items. Add Sensorial / PE items here.
+const CATALOG = {
+ "Practical Life": {
+  "A — Pouring Activities":["Small Water Jars","Plastic Mug","Small Plastic Jug","Glass Bowl","Plastic Container"],
+  "B — Maintenance/Safety Tool":["Nuts & Bolts","Nails","Padlock with Key"],
+  "C — Care of Self (Including Dressing Skills)":["Hand Wash Liquid","Plastic Cotton Buds","Cotton Balls","Round Hair Brush","Square Hair Brush","Mirror Square Plastic Frame","Nail Brush","Toiletry Bag","Perfume","School Bag","Boys Long Sleeve Shirt","Boys Short Sleeve Shirt","Kid T-Shirt","Kid Pijamas","Long Kid Jean","Short Kid Jean","Kid Socks","Kid Sneakers","Kid Flip Flop","Shoes for Boy","Shoes Brush","Shoes Wax","Yoga Mat"],
+  "D — Care of Environment (Cleaning)":["Dishwashing Sponge","Long Broom","Dustpan","Bamboo Rake","Small Dustpan & Brush Set","Plastic Basin"],
+  "E — Food Preparation/Serving":["Chopping Board","Stainless Steel Butter Knife","Peeler","Grater","Rolling Pin","Sieve / Strainer","Citrus Juicer","Cookie Cutter","Charcoal Grill","Serving Tray","Plastic Plate","Porcelain Soup Spoon","Big Plastic Bowls","Small Plastic Bowls","Plastic Basket","Stainless Steel Spoon","Stainless Steel Fork","Kitchen Knife (M) - Cooking Project ONLY*","Kitchen Knife (S) - Cooking Project ONLY*"],
+  "F — Dressing/Sewing Skills":["Wooden Cloth Hanger","Plastic Clothespin","Shirt Button (White)","Shirt Button (Black)","Shirt Button (Gray)","Shirt Button (Pink)","Shirt Button (Blue)","Sewing Needle","Needle Pin with Head (Pink)","Craft Pin Wheel"],
+  "G — Care of Environment (Plant Care)":["Watering Can","Plant Pot","Plant Pot on Saucer"],
+  "H — Miscellaneous":["Small Teddy Bear","Matchstick Box","Safety Glasses Protection","Plastic Bead (White)","Plastic Bead (Gold)","Plastic Bead (Red)","Plastic Bead (Blue)"]
+ },
+ "Sensorial": ["Cylinder Blocks","Pink Tower","Brown Stairs","Numerical Rods/Red Rods","Touch/Tactile Boards","Sound Cylinders","Smelling Bottles","Knobless Cyliders","Color Tablets","Demonstration Tray","Touch Tablets","Touch Fabric","Geomatrical Cabinet","Geomatric Form Cards","Botany Cabinet","Thermic Tablets","Baric Tablets","Binomial Cube","Mystery Bag","Gemetric Solids","Three-in nomial Cube","Button Frame","Snap Frame","Zipper Frame","Hook Frame","Buckle Frame","Bow Frame","Lace Frame"],
+ "PE Materials": ["Traffic Cone (50cm)","Space Markers on Holder","Hula Hoops (Children)","Skipping ropes 500 rubber","Plastic Balls Pack","Essential Football Agility Ladder (3.20m)","Basketball r500 (Size 7)","Football First Kick (Size 4)"]
+};
+
+const $ = (s,r=document)=>r.querySelector(s);
+const today=new Date(); $("#reqDate").value=new Date(today-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const cats = Object.keys(CATALOG), state = {}, panels = $("#panels"), tabs = $("#tabs");
+let active = cats[0];
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+cats.forEach((c,i)=>{
+ const id = "c"+i; state[c] = {items:[], wf:""};
+ const b = document.createElement("button");
+ b.type="button"; b.role="tab"; b.dataset.c=c; b.innerHTML=`${c} <span class="cnt"></span>`; b.onclick=()=>show(c); tabs.append(b);
+ const title=c+(/Materials$/.test(c)?"":" Materials"), flat=Array.isArray(CATALOG[c]), groups=flat?{"":CATALOG[c]}:CATALOG[c], subs=Object.keys(groups);
+ const cell=(s,m)=>`<div class="mi"><label class="ck"><input type="checkbox" data-s="${esc(s)}" data-m="${esc(m)}"> ${esc(m)}</label><input type="number" min="1" value="1" aria-label="Quantity: ${esc(m)}"></div>`;
+ const p = document.createElement("section"); p.className="card hide"; p.dataset.cat=c;
+ p.innerHTML = `
+ <h2>${c}</h2><p class="sub">Complete the ${c} borrowing details.</p>
+ <label>Choose workflow *</label>
+ <div class="wf">
+  <div data-box="out"><label class="r"><input type="radio" name="${id}wf" value="Sign-Out"> Date of Collection</label>
+   <input type="date" id="${id}d1" data-f="out" aria-label="Date of Collection" disabled></div>
+  <div data-box="in"><label class="r"><input type="radio" name="${id}wf" value="Sign-In"> Date of Return</label>
+   <input type="date" id="${id}d2" data-f="in" aria-label="Date of Return" disabled></div>
+ </div>
+ <label style="margin-top:20px">${title} Borrowed *</label>
+ <p class="sub" style="margin:0 0 8px">${flat?"Add each material with its own quantity.":"Choose a subsection, select a material, enter a quantity, and then review your selected items."}</p>
+ ${subs.map((s,si)=>{const cells=groups[s].map(m=>cell(s,m)).join("")||'<p class="empty" style="grid-column:1/-1">No materials added yet.</p>';
+  return flat?`<div class="grid one">${cells}</div>`:`<details${si===0?" open":""}><summary>${esc(s)}</summary><div class="grid">${cells}</div></details>`}).join("")}
+ <div class="btns"><button type="button" class="clr">Clear all selected materials</button></div>`;
+ panels.append(p);
+ const st = state[c];
+
+ p.querySelectorAll('input[type=radio]').forEach(r=>r.onchange=()=>{
+  st.wf = r.value;
+  p.querySelectorAll("[data-box]").forEach(bx=>{
+   const on = (bx.dataset.box==="out")===(st.wf==="Sign-Out");
+   bx.classList.toggle("on",on);
+   bx.querySelectorAll("[data-f]").forEach(x=>{x.disabled=!on; if(!on) x.value="";}); // clear inactive values
+  });
+ });
+ p._upd=()=>{const n=p.querySelectorAll(".mi input:checked").length;b.querySelector(".cnt").textContent=n?`(${n})`:"";};
+ p.addEventListener("change",p._upd);
+ $(".clr",p).onclick=()=>{p.querySelectorAll(".mi input[type=checkbox]").forEach(cb=>{cb.checked=false;cb.closest(".mi").querySelector("input[type=number]").value=1;});$("#err").textContent="";p._upd();};
+});
+
+function show(c){
+ active=c;
+ [...tabs.children].forEach(b=>b.setAttribute("aria-selected",b.dataset.c===c));
+ panels.querySelectorAll("section").forEach(s=>s.classList.toggle("hide",s.dataset.cat!==c));
+}
+show(active);
+
+$("#pos").onchange=e=>$("#otherWrap").classList.toggle("hide",e.target.value!=="Other");
+
+const err=$("#err"); let step=1, pending=null;
+const fmt=d=>new Date(d+"T00:00:00").toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+function go(n){step=n;
+ [["step1",1],["act1",1],["step2",2],["act2",2]].forEach(([i,s])=>$("#"+i).classList.toggle("hide",n!==s));
+ $("#s1").classList.toggle("on",n===1);$("#s2").classList.toggle("on",n===2);scrollTo({top:0,behavior:"smooth"});}
+
+function collect(){
+ const bad=(m,c)=>{err.textContent=m;if(c)show(c);return null;};
+ const pos=$("#pos").value==="Other"?$("#other").value.trim():$("#pos").value;
+ if(!$("#reqDate").value) return bad("Enter the date of request.");
+ if(!$("#name").value.trim()) return bad("Enter the borrower / returner name.");
+ if(!$("#pos").value||!pos) return bad("Select your position"+($("#pos").value==="Other"?" and specify it.":"."));
+ if(!$("#level").value.trim()) return bad("Enter the level.");
+ const out=[];
+ for(const c of cats){
+  const st=state[c], p=$(`[data-cat="${c}"]`);
+  const items=[...p.querySelectorAll(".mi input[type=checkbox]:checked")].map(cb=>({sub:cb.dataset.s,material:cb.dataset.m,qty:parseInt(cb.closest(".mi").querySelector("input[type=number]").value,10)}));
+  if(!items.length) continue;
+  if(!st.wf) return bad(`${c}: choose Date of Collection or Date of Return.`,c);
+  const date=p.querySelector(`[data-box="${st.wf==="Sign-Out"?"out":"in"}"] input[type=date]`).value;
+  if(!date) return bad(`${c}: enter the ${st.wf==="Sign-Out"?"collection":"return"} date.`,c);
+  if(items.some(i=>!(i.qty>0))) return bad(`${c}: enter a quantity of 1 or more for each selected material.`,c);
+  out.push({requestDate:$("#reqDate").value,level:$("#level").value.trim(),name:$("#name").value.trim(),position:pos,category:c,workflow:st.wf,date,record:"",items});
+ }
+ if(!out.length) return bad("Select at least one material.");
+ err.textContent="";
+ return out;
+}
+
+function review(){
+ const list=collect(); if(!list) return; pending=list; $("#ok").style.display="none";
+ const d=list[0], t=c=>c+(/Materials$/.test(c)?"":" Materials");
+ const rows=[["Date of Request",fmt(d.requestDate)],["Borrower / Returner Name",d.name],["Position",d.position],["Level",d.level]];
+ $("#sum").innerHTML=`<table class="sum">${rows.map(r=>`<tr><th>${r[0]}</th><td>${esc(r[1])}</td></tr>`).join("")}</table>`+
+ list.map(x=>{const so=x.workflow==="Sign-Out", total=x.items.reduce((a,i)=>a+i.qty,0);
+  return `<h3>${esc(t(x.category))} Borrowed (${x.items.length} item${x.items.length>1?"s":""}, ${total} total)</h3>
+  <table class="sum"><tr><th>Workflow</th><td>${so?"Sign-Out (Date of Collection)":"Sign-In (Date of Return)"}</td></tr><tr><th>${so?"Date of Collection":"Date of Return"}</th><td>${fmt(x.date)}</td></tr>
+  ${x.items.map(i=>`<tr><th>${esc(i.material)}${i.sub?`<br><small>${esc(i.sub)}</small>`:""}</th><td>× ${i.qty}</td></tr>`).join("")}</table>`}).join("");
+ go(2);
+}
+$("#next").onclick=review;
+$("#back").onclick=()=>{err.textContent="";go(1);};
+
+$("#f").onsubmit=async e=>{
+ e.preventDefault();
+ if(step===1) return review();
+ if(!pending) return go(1);
+ if(ENDPOINT.startsWith("PASTE")) return err.textContent="Setup needed: add your Google Apps Script URL to ENDPOINT.";
+ err.textContent=""; const btn=$("#submit"); btn.disabled=true; btn.textContent="Submitting…";
+ try{
+  for(const x of pending){
+   await fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(x)});
+  }
+  const n=pending.reduce((a,x)=>a+x.items.length,0), names=pending.map(x=>x.category).join(", ");
+  const ok=$("#ok"); ok.style.display="block"; ok.textContent=`Submitted: ${n} item${n>1?"s":""} (${names}).`;
+  pending.forEach(x=>{const st=state[x.category], p=$(`[data-cat="${x.category}"]`); st.wf="";
+   p.querySelectorAll("input").forEach(i=>{if(i.type==="radio"||i.type==="checkbox")i.checked=false;else if(i.type==="number")i.value=1;else i.value="";});
+   p.querySelectorAll("[data-f]").forEach(i=>i.disabled=true); p.querySelectorAll("[data-box]").forEach(bx=>bx.classList.remove("on")); p._upd();});
+  pending=null; go(1);
+ }catch(x){err.textContent="Could not submit. Check your connection and try again.";}
+ btn.disabled=false; btn.textContent="Submit reservation";
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script>
+if (window.location.pathname.endsWith('/index.html')) {
+  window.location.replace(
+    window.location.href.replace('/index.html', '/')
+  );
+}
+</script>
+  <link rel="icon" type="image/png" href="./favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aii Language Center - Academic Request Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+        }
+
+        /* Animated gradient background canvas overlay */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Radial glow around center logo */
+        .glow-effect {
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sub-node hover glow */
+        .node-glow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .node-glow:hover {
+            transform: var(--hover-transform) !important;
+            box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 255, 255, 0.8);
+            background-color: #f8fafc;
+        }
+
+        /* Custom SVG Aii Logo Style */
+        .aii-text-color {
+            fill: #0c567d;
+        }
+
+        /* Hover Container & Interactive Invisible Hover Bridge */
+        .hub-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Extended hit area bridge to prevent menu from closing when moving mouse from logo to sub-buttons */
+        .hub-container::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: -80px;
+            right: -80px;
+            bottom: 0;
+            border-radius: 50% 50% 0 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hub-container:hover::before,
+        .hub-container.active::before {
+            pointer-events: auto;
+        }
+
+        /* Popup Sub-Buttons Base Styles & Interactive Anchor Tags */
+        .sub-node {
+            position: absolute;
+            width: 115px;
+            height: 115px;
+            border-radius: 50%;
+            background: white;
+            color: #0c567d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            cursor: pointer;
+            opacity: 0;
+            transform: translate(0, 20px) scale(0.2);
+            pointer-events: none;
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+            z-index: 20;
+            text-decoration: none;
+            outline: none;
+        }
+
+        /* When trigger / parent hover is active, popup sub-nodes into position */
+        .hub-container:hover .sub-node,
+        .hub-container.active .sub-node {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Left Sub Node (Teaching Supply) */
+        .sub-node-1 {
+            --hover-transform: translate(-135px, -115px) scale(1.12);
+        }
+        .hub-container:hover .sub-node-1,
+        .hub-container.active .sub-node-1 {
+            transform: translate(-135px, -115px) scale(1);
+            transition-delay: 0.02s;
+        }
+
+        /* Top Center Sub Node (Materials Reservation) */
+        .sub-node-2 {
+            --hover-transform: translate(0px, -160px) scale(1.18);
+        }
+        .hub-container:hover .sub-node-2,
+        .hub-container.active .sub-node-2 {
+            transform: translate(0px, -160px) scale(1.08);
+            transition-delay: 0.08s;
+        }
+
+        /* Right Sub Node (Stock Requisition) */
+        .sub-node-3 {
+            --hover-transform: translate(135px, -115px) scale(1.12);
+        }
+        .hub-container:hover .sub-node-3,
+        .hub-container.active .sub-node-3 {
+            transform: translate(135px, -115px) scale(1);
+            transition-delay: 0.14s;
+        }
+
+        /* Pulse hint effect around main logo when idle */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .pulse-idle {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+
+        .hub-container:hover .pulse-idle {
+            animation: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-[#0e5277] via-[#093e5d] to-[#042033] min-h-screen text-white relative overflow-x-hidden flex flex-col justify-between select-none">
+
+    <!-- Interactive Canvas Animated Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header Section -->
+    <header class="relative z-10 w-full px-6 py-6 md:px-12 flex justify-between items-center max-w-7xl mx-auto">
+        <!-- Top-left Brand Badge -->
+        <a href="index.html" class="bg-white px-5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 border border-white/20 hover:scale-105 transition-transform duration-300 group">
+            <span class="text-[#0c567d] font-extrabold text-lg md:text-xl tracking-tight">Aii LANGUAGE CENTER</span>
+        </a>
+
+        <!-- Top-right Title -->
+        <div class="text-right">
+            <span class="text-white/80 font-medium text-sm md:text-base tracking-wide border-b border-white/20 pb-1 inline-block">
+                Office of the Academic Secretary
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-6 text-center max-w-4xl mx-auto w-full">
+        
+        <!-- Central Typography -->
+        <div class="mb-10 md:mb-14 space-y-3 transition-all duration-500 transform">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">
+                Academic Request Forms
+            </h1>
+            <p class="text-xs sm:text-sm md:text-base text-white/85 max-w-2xl mx-auto leading-relaxed font-light px-4">
+                "Please click the button link below to access your form."
+            </p>
+        </div>
+
+        <!-- Interactive Central Hub & Dynamic Popup Radial Link Buttons -->
+        <div class="relative my-6 sm:my-10 flex justify-center items-center">
+            
+            <div class="hub-container group" id="hubContainer">
+
+                <!-- 1. Left Circle Link Button: Teaching Supply Form -->
+                <a href="Teaching-Supply.html" 
+                   class="sub-node sub-node-1 node-glow group/node"
+                   title="Open Teaching Supply Form">
+                    <span class="leading-tight">Teaching Supply Form</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] mt-1 opacity-60 group-hover/node:opacity-100 group-hover/node:translate-x-0.5 transition-all"></i>
+                </a>
+
+                <!-- 2. Middle Top Circle Link Button: Materials Reservation Form -->
+                <a href="Materials-Reservation.html" 
+                   class="sub-node sub-node-2 node-glow group/node"
+                   title="Open Materials Reservation Form">
+                    <span class="leading-tight">Materials Reservation Form</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] mt-1 opacity-60 group-hover/node:opacity-100 group-hover/node:translate-x-0.5 transition-all"></i>
+                </a>
+
+                <!-- 3. Right Circle Link Button: Stock Requisition Form -->
+                <a href="Stock-Requisition.html" 
+                   class="sub-node sub-node-3 node-glow group/node"
+                   title="Open Stock Requisition Form">
+                    <span class="leading-tight">Stock Requisition Form</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] mt-1 opacity-60 group-hover/node:opacity-100 group-hover/node:translate-x-0.5 transition-all"></i>
+                </a>
+
+                <!-- Center Main Circular Element: Aii Logo -->
+                <div class="w-64 h-64 md:w-72 md:h-72 bg-white rounded-full flex items-center justify-center glow-effect cursor-pointer transform transition-all duration-300 group-hover:scale-105 active:scale-95 pulse-idle relative z-10 shadow-2xl border-4 border-white/50"
+                     id="centerLogo">
+                    
+                    <!-- SVG Vector Replica of Aii Brand Logo -->
+                    <svg class="w-44 h-44 md:w-48 md:h-48" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Letter 'A' -->
+                        <path class="aii-text-color" d="M22 135 L62 25 L88 25 L128 135 L102 135 L93 110 L57 110 L48 135 Z M63 90 L87 90 L75 52 Z" />
+                        <!-- First 'i' -->
+                        <rect class="aii-text-color" x="135" y="50" width="22" height="85" rx="2" />
+                        <rect class="aii-text-color" x="135" y="25" width="22" height="20" rx="2" />
+                        <!-- Second 'i' -->
+                        <rect class="aii-text-color" x="165" y="50" width="22" height="85" rx="2" />
+                        <rect class="aii-text-color" x="165" y="25" width="22" height="20" rx="2" />
+                    </svg>
+
+                    <!-- Mobile helper hint badge -->
+                    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-white/80 whitespace-nowrap bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm md:hidden">
+                        Tap logo to show links
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Footer Direct Link -->
+    <footer class="relative z-10 w-full py-6 text-center">
+        <span>IT Technical Support</span>
+    </footer>
+
+    <!-- JavaScript for Dynamic Particle Canvas & Navigation Logic -->
+    <script>
+        // --- 1. Background Animated Particles ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 2.5 + 0.5;
+                this.alpha = Math.random() * 0.5 + 0.1;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4 - 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(width * 0.05), 60);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        let step = 0;
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            step += 0.005;
+            const glowX = width / 2 + Math.sin(step) * 100;
+            const glowY = height / 2 + Math.cos(step * 0.7) * 50;
+
+            const radialGlow = ctx.createRadialGradient(glowX, glowY, 50, glowX, glowY, Math.max(width, height) * 0.7);
+            radialGlow.addColorStop(0, 'rgba(20, 110, 160, 0.15)');
+            radialGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            ctx.fillStyle = radialGlow;
+            ctx.fillRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+
+        // --- 2. Mobile / Touch Toggle Support ---
+        const hubContainer = document.getElementById('hubContainer');
+        const centerLogo = document.getElementById('centerLogo');
+        
+        centerLogo.addEventListener('click', (e) => {
+            hubContainer.classList.toggle('active');
+        });
+
+        // Close popups when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (!hubContainer.contains(e.target)) {
+                hubContainer.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

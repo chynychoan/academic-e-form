@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secretary Stock Requisition Form</title>
+  <style>
+    :root {
+      --bg-color: #e9eff4;
+      --header-bg: #0e527d;
+      --card-bg: #ffffff;
+      --primary: #0e527d;
+      --primary-hover: #0a3d5e;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --border-color: #cbd5e0;
+      --input-bg: #ffffff;
+      --light-blue-bg: #f0f5f9;
+      --selected-bg: #e6f0f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-banner {
+      width: 100%;
+      background: linear-gradient(135deg, #073b57 0%, #0b4e72 60%, #156d9c 100%);
+      color: white;
+      padding: 30px 20px 50px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto auto;
+      font-size: 13px;
+    }
+
+     .logo {
+      font-weight: bold;
+      font-size: 20px;
+      background: white;
+      color: var(--primary-color);
+      padding: 4px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: -20px auto 40px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-header h1 {
+      color: #0e527d;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    /* Step Indicator Bar */
+    .step-bar {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 15px 25px;
+      background-color: #fafbfc;
+      gap: 30px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .step-item.active {
+      color: var(--primary);
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #cbd5e0;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .step-item.active .step-number {
+      background-color: var(--primary);
+    }
+
+    .step-content {
+      padding: 30px;
+      display: none;
+    }
+
+    .step-content.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+    }
+
+    /* Form Fields Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    label .req {
+      color: #e53e3e;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      background-color: var(--input-bg);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Step 2 Layout */
+    .products-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      margin-bottom: 15px;
+    }
+
+    .product-list {
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      border-bottom: 1px solid #edf2f7;
+      transition: background-color 0.2s;
+    }
+
+    .product-item:last-child {
+      border-bottom: none;
+    }
+
+    .product-item.selected {
+      background-color: var(--selected-bg);
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .product-info input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .product-info span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .product-qty input {
+      width: 60px;
+      text-align: center;
+      padding: 6px;
+    }
+
+    /* Sidebar Selection Box */
+    .selection-summary {
+      background-color: var(--light-blue-bg);
+      border-radius: 6px;
+      padding: 15px;
+      height: fit-content;
+    }
+
+    .selection-summary h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .summary-items {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: #4a5568;
+    }
+
+    .summary-item .qty {
+      font-weight: bold;
+    }
+
+    .summary-total {
+      border-top: 1px solid #cbd5e0;
+      padding-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .actions.between {
+      justify-content: space-between;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-secondary:hover {
+      background-color: #cbd5e0;
+    }
+
+    @media (max-width: 650px) {
+      .form-grid, .products-container {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+    }
+
+/* Ambient light button container */
+.home-btn-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 2px;
+  overflow: hidden;
+}
+
+/* Rotating ambient light stroke gradient */
+.home-btn-wrap::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0 300deg, #00f2fe 340deg, #4facfe 360deg);
+  animation: rotateLight 3s linear infinite;
+}
+
+@keyframes rotateLight {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Home button */
+.home-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: #0a5078;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: .9rem;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.home-btn:hover {
+  background: #ffffff;
+  color: #0a5078;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header-banner">
+    <div class="top-bar">
+      <span class="logo" style="color:#0a5078">Aii LANGUAGE CENTER</span>
+      <span>Office of the Academic Secretary</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="form-header">
+    <br>
+      <br>
+      <h1>Secretary Stock Requisition Form</h1>
+      <p>Please use this e-form to request student or classroom supplies. Requests are subject to approval by your line manager.</p>
+      <br>
+      <div class="home-btn-wrap">
+  <a href="index.html" class="home-btn"><i class="fa-solid fa-house"></i>Back Home</a>
+</div>
+    </div>
+
+    <form id="requisitionForm" class="card">
+      <!-- Step Header -->
+      <div class="step-bar">
+        <div class="step-item active" id="step1-tab">
+          <span class="step-number">1</span>
+          <span>Requester Information</span>
+        </div>
+        <div class="step-item" id="step2-tab">
+          <span class="step-number">2</span>
+          <span>Select Products</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Requester Information -->
+      <div class="step-content active" id="step1">
+        <h2 class="section-title">Requester Information</h2>
+        <p class="section-subtitle">All fields in this section are required.</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date of Request <span class="req">*</span></label>
+            <input type="date" id="dateRequest" required>
+          </div>
+          <div class="form-group">
+            <label>Date of Collection <span class="req">*</span></label>
+            <input type="date" id="dateCollection" required>
+          </div>
+          <div class="form-group">
+            <label>Name <span class="req">*</span></label>
+            <input type="text" id="requesterName" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Position <span class="req">*</span></label>
+            <select id="position" required>
+              <option value="">Select position...</option>
+              <option value="ESL Teacher">ESL Teacher</option>
+              <option value="ESL Teacher Aide">ESL Teacher Aide</option>
+              <option value="CSL Teacher">CSL Teacher</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Room <span class="req">*</span></label>
+            <input type="text" id="room" placeholder="e.g. Room 102" required>
+          </div>
+          <div class="form-group">
+            <label>Level <span class="req">*</span></label>
+            <input type="text" id="level" placeholder="e.g. Primary / Secondary" required>
+          </div>
+          <div class="form-group full-width">
+            <label>What is the purpose of requesting this item today?</label>
+            <textarea id="purpose" placeholder="Describe the purpose..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" onclick="goToStep(2)">Continue to Products &rarr;</button>
+        </div>
+        <P><b>IT Technical Support</b></P>
+      </div>
+
+      <!-- Step 2: Select Products -->
+      <div class="step-content" id="step2">
+        <h2 class="section-title">Select Products</h2>
+        <p class="section-subtitle">Choose as many products as you need and enter a quantity for each.</p>
+
+        <div class="form-group search-input">
+          <label>Search products</label>
+          <input type="text" id="searchProduct" placeholder="Search by product name..." oninput="filterProducts()">
+        </div>
+
+        <div class="products-container">
+          <!-- Product List -->
+          <div class="product-list" id="productList">
+            <!-- Items rendered via JS -->
+          </div>
+
+          <!-- Selection Summary Sidebar -->
+          <div class="selection-summary">
+            <h3>Your selection</h3>
+            <div class="summary-items" id="summaryList">
+              <span style="font-size: 12px; color: #a0aec0;">No products selected</span>
+            </div>
+            <div class="summary-total" id="summaryTotal">
+              0 product(s) · 0 unit(s)
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea id="remarks" placeholder="e.g. Class 3B, deliver to the staff room"></textarea>
+        </div>
+
+        <div class="actions between">
+          <button type="button" class="btn btn-secondary" onclick="goToStep(1)">Back</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit requisition</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Config: Replace these URLs with your actual endpoints
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwjI-MO8ofwVeS-vjscql9sMRvp7FROXwaO8Yy3yy1ckonJCnMlKV7kKJITjH7A3BBI/exec";
+    const TELEGRAM_BOT_TOKEN = "8653756476:AAEBjhjw4YQhVWVPOGP5YcaBERgb-H-gtec";
+    const TELEGRAM_CHAT_ID = "-1004383419767";
+
+    // Default Catalog Data
+    const productsData = [
+      { id: "1", name: "Medium Plastic Bag (50x80)" },
+      { id: "2", name: "Small Plastic Bag (12 X 20)" },
+      { id: "3", name: "Mask" },
+      { id: "4", name: "A4 Brown Envelope" },
+      { id: "5", name: "A4 Laminating Film" },
+      { id: "6", name: "A3 Laminating Film" },
+      { id: "7", name: "A4 Green Paper 500 Sheets 80g" },
+      { id: "8", name: "A4 Red Paper 500 Sheets 80g" },
+      { id: "9", name: "A4 Blue Paper 500 Sheets 80g" },
+      { id: "10", name: "A4 Orange Paper 500 Sheets 80g" },
+      { id: "11", name: "A4 Yellow Paper 500 Sheets 80g" },
+      { id: "12", name: "A4 Purple Paper 500 Sheets 80g" },
+      { id: "13", name: "A4 Pink Paper 500 Sheets 80g" },
+      { id: "14", name: "A4 Paper 180g" },
+      { id: "15", name: "A4 Paper 220g" },
+      { id: "16", name: "A4 Paper 250g" },
+      { id: "17", name: "A4 Photo Paper 135g" },
+      { id: "18", name: "A3 Photo Paper 135g" },
+      { id: "19", name: "Plastic Clear Folder" },
+      { id: "20", name: "Label A4" }
+    ];
+
+    let selectedProducts = {};
+
+    // Set Default Dates
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateRequest').value = today;
+    document.getElementById('dateCollection').value = today;
+
+    // Render Product List
+    function renderProducts(filter = '') {
+      const listContainer = document.getElementById('productList');
+      listContainer.innerHTML = '';
+
+      productsData.forEach(prod => {
+        if (prod.name.toLowerCase().includes(filter.toLowerCase())) {
+          const isChecked = !!selectedProducts[prod.id];
+          const qty = isChecked ? selectedProducts[prod.id].qty : '';
+
+          const itemEl = document.createElement('div');
+          itemEl.className = `product-item ${isChecked ? 'selected' : ''}`;
+          itemEl.innerHTML = `
+            <div class="product-info">
+              <input type="checkbox" id="chk-${prod.id}" ${isChecked ? 'checked' : ''} onchange="toggleProduct('${prod.id}', '${prod.name}')">
+              <span>${prod.name}</span>
+            </div>
+            <div class="product-qty">
+              <input type="number" min="1" placeholder="Qty" value="${qty}" id="qty-${prod.id}" oninput="updateQty('${prod.id}', '${prod.name}', this.value)" ${!isChecked ? 'disabled' : ''}>
+            </div>
+          `;
+          listContainer.appendChild(itemEl);
+        }
+      });
+    }
+
+    function toggleProduct(id, name) {
+      const chk = document.getElementById(`chk-${id}`);
+      const qtyInput = document.getElementById(`qty-${id}`);
+
+      if (chk.checked) {
+        qtyInput.disabled = false;
+        qtyInput.value = 1;
+        selectedProducts[id] = { name, qty: 1 };
+      } else {
+        qtyInput.disabled = true;
+        qtyInput.value = '';
+        delete selectedProducts[id];
+      }
+      renderProducts(document.getElementById('searchProduct').value);
+      updateSummary();
+    }
+
+    function updateQty(id, name, val) {
+      const parsed = parseInt(val) || 0;
+      if (parsed > 0) {
+        selectedProducts[id] = { name, qty: parsed };
+      } else if (selectedProducts[id]) {
+        selectedProducts[id].qty = 0;
+      }
+      updateSummary();
+    }
+
+    function filterProducts() {
+      const q = document.getElementById('searchProduct').value;
+      renderProducts(q);
+    }
+
+    function updateSummary() {
+      const summaryList = document.getElementById('summaryList');
+      const summaryTotal = document.getElementById('summaryTotal');
+      summaryList.innerHTML = '';
+
+      let totalProducts = 0;
+      let totalUnits = 0;
+
+      const keys = Object.keys(selectedProducts);
+      if (keys.length === 0) {
+        summaryList.innerHTML = '<span style="font-size: 12px; color: #a0aec0;">No products selected</span>';
+      } else {
+        keys.forEach(key => {
+          const item = selectedProducts[key];
+          if (item.qty > 0) {
+            totalProducts++;
+            totalUnits += item.qty;
+
+            const div = document.createElement('div');
+            div.className = 'summary-item';
+            div.innerHTML = `<span>${item.name}</span><span class="qty">× ${item.qty}</span>`;
+            summaryList.appendChild(div);
+          }
+        });
+      }
+
+      summaryTotal.innerText = `${totalProducts} product(s) · ${totalUnits} unit(s)`;
+    }
+
+    // Navigation between steps
+    function goToStep(stepNum) {
+      if (stepNum === 2) {
+        // Simple Step 1 validation
+        const reqFields = ['dateRequest', 'dateCollection', 'requesterName', 'position', 'room', 'level'];
+        for (let id of reqFields) {
+          if (!document.getElementById(id).value.trim()) {
+            alert('Please fill out all required fields in Section 1.');
+            return;
+          }
+        }
+      }
+
+      document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.step-item').forEach(el => el.classList.remove('active'));
+
+      document.getElementById(`step${stepNum}`).classList.add('active');
+      document.getElementById(`step${stepNum}-tab`).classList.add('active');
+    }
+
+    // Submit Handler
+    document.getElementById('requisitionForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const itemsList = Object.values(selectedProducts).filter(p => p.qty > 0);
+      if (itemsList.length === 0) {
+        alert('Please select at least one product with a valid quantity.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+
+      const formData = {
+        dateRequest: document.getElementById('dateRequest').value,
+        dateCollection: document.getElementById('dateCollection').value,
+        name: document.getElementById('requesterName').value,
+        position: document.getElementById('position').value,
+        room: document.getElementById('room').value,
+        level: document.getElementById('level').value,
+        purpose: document.getElementById('purpose').value,
+        remarks: document.getElementById('remarks').value,
+        items: itemsList.map(i => `${i.name} (x${i.qty})`).join(', ')
+      };
+
+      try {
+        // 1. Send to Google Sheets (via Apps Script)
+        if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes("YOUR_GOOGLE_APPS")) {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+        }
+
+        // 2. Send to Telegram Group
+        if (TELEGRAM_BOT_TOKEN && !TELEGRAM_BOT_TOKEN.includes("YOUR_TELEGRAM")) {
+          const tgMsg = `📦 <b>New Stock Requisition Request</b>\n\n` +
+            `👤 Namer: ${formData.name}\n` +
+            //`💼 Position: ${formData.position}\n` +
+            //`📍 Room: ${formData.room} | Level: ${formData.level}\n` +
+            `📅 Request Date: ${formData.dateRequest}\n` +
+            `📅 Collection Date: ${formData.dateCollection}\n` +
+            `📝 Purpose: ${formData.purpose || 'N/A'}\n` +
+           // `🛍️ Requested Items:\n${itemsList.map(i => `• ${i.name} Qty: ${i.qty}`).join('\n')}\n\n` +
+            `\n🔗 <a href="https://docs.google.com/spreadsheets/d/1k-4uaNnL-GW0mMJlrt-sW3xGZENCBSNB2KrW8m7nxS0/edit?gid=527722718#gid=527722718">View and Approve Request</a>`
+            
+
+          await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: tgMsg,
+              parse_mode: 'HTML'
+            })
+          });
+        }
+
+        alert('Requisition submitted successfully!');
+        location.reload();
+      } catch (err) {
+        console.error(err);
+        alert('There was an error submitting your request. Please check your webhooks configuration.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit requisition';
+      }
+    });
+
+    // Initialize
+    renderProducts();
+  </script>
+</body>
+</html>
